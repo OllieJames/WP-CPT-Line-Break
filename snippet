@@ -1,0 +1,22 @@
+add_filter('the_content', 'add_line_breaks');
+
+function add_line_breaks($content) {
+  if (is_singular('custom_post_type')) { // Replace 'custom_post_type' with the name of your custom post type
+    // Split the content into an array of sentences
+    $sentences = preg_split('/(?<=[.?!])\s+(?=[A-Z])/i', $content);
+
+    // Add a <br /> tag after every 5 sentences
+    $i = 0;
+    $new_content = '';
+    foreach ($sentences as $sentence) {
+      $i++;
+      $new_content .= $sentence . ' ';
+      if ($i % 5 == 0) {
+        $new_content .= '<br />';
+      }
+    }
+    $content = $new_content;
+  }
+
+  return $content;
+}
